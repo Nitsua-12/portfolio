@@ -1,0 +1,49 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const projects = [
+  {
+    href: "/projects/synthwave-scene-generator",
+    name: "Synthwave Scene Generator",
+    summary:
+      "During discovery about what I wanted this site to look like, I described a very specific image without meaning to. Instead of just using it as a color reference, I built a tool that generates it — procedurally, so it's never the same scene twice.",
+    tags: ["TypeScript", "Canvas 2D", "Vite"],
+  },
+  {
+    href: "/projects/shift-swap",
+    name: "Shift Swap",
+    summary:
+      "A full-stack app for the actual problem I deal with as a shift lead: getting a shift covered and getting a manager's sign-off, without it turning into a group chat.",
+    tags: ["FastAPI", "SQLModel", "SQLite", "React", "TypeScript"],
+  },
+];
+---
+
+<Layout title="Projects" description="Two real projects, built and documented from scratch.">
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <h1 class="text-3xl font-semibold">Projects</h1>
+    <p class="prose mt-3 text-[var(--text-dim)]">
+      Both of these were built during this portfolio project itself — not pulled from old coursework. Each one has a
+      full case study covering the technical approach and the decisions behind it.
+    </p>
+
+    <div class="mt-10 flex flex-col gap-6">
+      {projects.map((project) => (
+        <a
+          href={project.href}
+          class="block rounded-lg border border-white/10 bg-white/5 p-6 no-underline transition-colors hover:border-[var(--accent-2)]/50"
+        >
+          <h2 class="text-xl font-semibold text-white">{project.name}</h2>
+          <p class="prose mt-2 text-sm text-[var(--text-dim)]">{project.summary}</p>
+          <div class="mt-4 flex gap-2">
+            {project.tags.map((tag) => (
+              <span class="mono rounded border border-white/10 px-2 py-0.5 text-xs text-[var(--accent-2)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CaseStudyHeader from "../../components/CaseStudyHeader.astro";
+
+const screenshots = [
+  { src: "/shift-swap/shift-2-alice-dashboard.png", alt: "Employee dashboard showing an upcoming shift with a Request swap button" },
+  { src: "/shift-swap/shift-4-board.png", alt: "Swap board showing an open swap request with a Claim button" },
+  { src: "/shift-swap/shift-5-approvals.png", alt: "Manager approvals view showing a claimed swap pending a decision" },
+  { src: "/shift-swap/shift-6-approved.png", alt: "Approvals view after the swap has been approved, now empty" },
+];
+---
+
+<Layout
+  title="Shift Swap"
+  description="A full-stack shift-swap app for hourly teams — FastAPI, SQLModel, and a React frontend, built from real shift-lead experience."
+>
+  <CaseStudyHeader
+    title="Shift Swap"
+    summary="A full-stack app for the problem I actually deal with as a shift lead: getting a shift covered and getting a manager's sign-off, without it turning into a group chat."
+    tags={["FastAPI", "SQLModel", "SQLite", "React", "TypeScript", "Tailwind", "JWT auth"]}
+  />
+
+  <section class="mx-auto max-w-3xl px-6 py-10">
+    <h2 class="text-xl font-semibold text-white">What it does</h2>
+    <p class="prose mt-3 text-[var(--text-dim)]">
+      Employees see their upcoming shifts and can flag one as available to swap. Other employees see open requests
+      on a shared board and can claim one. A manager reviews claimed swaps and approves or denies them — only on
+      approval does the shift actually change hands. Three roles of interaction, one real workflow, enforced
+      server-side rather than trusted to the UI.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 py-10">
+    <h2 class="text-xl font-semibold text-white">Walkthrough</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
+      {screenshots.map((shot) => (
+        <div class="h-56 overflow-hidden rounded-lg border border-white/10">
+          <img src={shot.src} alt={shot.alt} class="w-full object-cover object-top" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="prose mx-auto max-w-3xl px-6 py-10">
+    <h2 class="text-xl font-semibold text-white">Technical approach</h2>
+    <ul class="mt-4 flex flex-col gap-3 text-[var(--text-dim)]">
+      <li>
+        <strong class="text-white">FastAPI + SQLModel + SQLite.</strong> A Python backend, matching my coursework,
+        doing the harder half of the work — data modeling, auth, business rules — paired with a typed React
+        frontend. SQLite means anyone can clone the repo and run it with zero setup.
+      </li>
+      <li>
+        <strong class="text-white">JWT auth with two roles.</strong> Employees and managers share the same login
+        flow; role checks happen server-side. A manager-only endpoint actually rejects a non-manager token — it
+        doesn't just hide a button in the UI.
+      </li>
+      <li>
+        <strong class="text-white">A real state machine.</strong> Swap requests move through{" "}
+        <code class="mono">open → claimed → approved</code> or <code class="mono">denied</code>, and the API enforces
+        valid transitions — you can't claim your own swap, and you can't approve something that hasn't been claimed.
+      </li>
+      <li>
+        <strong class="text-white">A join, not a raw ID dump.</strong> The swap board and approvals list return
+        actual names and shift times via a server-side join, not bare foreign-key integers for the frontend to
+        resolve.
+      </li>
+    </ul>
+
+    <h2 class="mt-10 text-xl font-semibold text-white">What building this surfaced</h2>
+    <p class="mt-4 text-[var(--text-dim)]">
+      Real friction, logged rather than smoothed over: a dependency version mismatch, a missing package, a port
+      collision with an unrelated service already running on the dev machine that happened to answer a health check
+      convincingly, and a CORS misconfiguration that only showed up once two projects' dev servers were running side
+      by side. None of it was a design mistake — it's the ordinary cost of standing up a real full-stack app, and
+      it's exactly the kind of thing a portfolio that only shows things going right would skip over.
+    </p>
+  </section>
+</Layout>

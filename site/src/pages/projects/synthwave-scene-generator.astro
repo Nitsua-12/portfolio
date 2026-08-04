@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CaseStudyHeader from "../../components/CaseStudyHeader.astro";
+import InteractiveSceneGenerator from "../../islands/InteractiveSceneGenerator";
+---
+
+<Layout
+  title="Synthwave Scene Generator"
+  description="A procedural canvas engine generating retro-neon sunset scenes, with a seeded RNG and three curated palettes."
+>
+  <CaseStudyHeader
+    title="Synthwave Scene Generator"
+    summary="A procedural canvas engine that draws a retro-neon sunset scene — the exact image I described unprompted when asked what I wanted this site to look like. It's never the same scene twice."
+    tags={["TypeScript", "Canvas 2D API", "Vite", "No framework"]}
+  />
+
+  <section class="mx-auto max-w-3xl px-6 py-10">
+    <h2 class="text-xl font-semibold text-white">Try it</h2>
+    <p class="prose mt-2 text-[var(--text-dim)]">
+      This is the actual project, running live — not a screenshot. Pick a palette, drag the slider from dusk to
+      night, and hit Randomize for a new layout.
+    </p>
+    <div class="mt-6">
+      <InteractiveSceneGenerator client:visible />
+    </div>
+  </section>
+
+  <section class="prose mx-auto max-w-3xl px-6 py-10">
+    <h2 class="text-xl font-semibold text-white">Technical approach</h2>
+    <ul class="mt-4 flex flex-col gap-3 text-[var(--text-dim)]">
+      <li>
+        <strong class="text-white">Seeded procedural generation.</strong> A <code class="mono">mulberry32</code> pseudo-random
+        generator means every scene is fully reproducible from its seed — the mountains, star field, and whether it
+        draws mountains or a small gas-station structure are all deterministic given that seed.
+      </li>
+      <li>
+        <strong class="text-white">Layout and rendering are deliberately separate.</strong> The composition (mountain
+        shape, star positions, silhouette choice) generates once per seed. Palette and time-of-day changes re-render
+        every frame without touching that layout — that's what makes the slider feel instant instead of janky.
+      </li>
+      <li>
+        <strong class="text-white">Curated, not infinite, color choice.</strong> Three hand-picked palettes instead of
+        a full color wheel — a deliberate constraint, since infinite choice is worse design than a few good ones.
+      </li>
+      <li>
+        <strong class="text-white">No framework.</strong> This is one interactive canvas with no routing or shared
+        app state — a UI framework would have been pure overhead. Plain TypeScript against the Canvas 2D API.
+      </li>
+    </ul>
+
+    <h2 class="mt-10 text-xl font-semibold text-white">What this demonstrates</h2>
+    <p class="mt-4 text-[var(--text-dim)]">
+      Getting the retro "scanline sun" cutout and the perspective grid to read correctly mattered more than any
+      individual shape — those two details are what separate this from just being a dark gradient with a circle on
+      it. The hero on this site's homepage is the same code, running with a fixed palette and a slow ambient
+      dusk-to-night drift instead of manual controls.
+    </p>
+  </section>
+</Layout>

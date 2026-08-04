@@ -1,0 +1,21 @@
+---
+const links = [
+  { href: "https://www.linkedin.com/in/austin-wakefield-a36522340", label: "LinkedIn" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<footer class="border-t border-white/10">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-8 text-sm text-[var(--text-dim)]">
+    <p>&copy; {new Date().getFullYear()} Austin Wakefield</p>
+    <ul class="flex gap-4">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} class="no-underline transition-colors hover:text-[var(--text)]">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,51 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const entries = [
+  {
+    heading: "Recalibrating who this site is even for",
+    body: "Partway through planning this site, it became clear the original brief assumed an experienced engineer trying to impress CTOs. That's not my situation — so instead of quietly building the wrong thing, the whole framing got recalibrated around an honest early-career story: real fundamentals, real AI fluency, real leadership experience from work, not a claim to seniority I don't have yet.",
+  },
+  {
+    heading: "A folder I thought was mine, wasn't",
+    body: "Early on, I pointed to two folders as my own projects. It turned out they were bundled demo content shipped inside a design tool I'd installed — not code I'd written. Rather than quietly using them anyway, that got flagged directly. It's exactly the kind of thing that would fall apart in a technical interview if I couldn't explain code I didn't actually write — so both projects on this site got built from scratch instead.",
+  },
+  {
+    heading: "A health check that lied",
+    body: "While standing up the Shift Swap backend, an early curl check to /health returned a perfectly reasonable-looking 200 OK — from a completely unrelated service that happened to already be running on the same port. My actual server had crashed on a missing dependency. Lesson: a 200 on the expected path isn't proof it's your server answering. Check the body, not just the status code.",
+  },
+  {
+    heading: "Curated palettes, not a color wheel",
+    body: "The scene generator could have exposed a full color picker. It uses three hand-picked palettes instead — a deliberate constraint, because infinite choice is worse design than a few good ones, and it's a smaller, more honest surface to explain if asked about it.",
+  },
+];
+---
+
+<Layout
+  title="AI Workflow"
+  description="How AI actually gets used in this work — real decisions and real mistakes, not a summary."
+>
+  <section class="prose mx-auto max-w-3xl px-6 py-16">
+    <h1 class="text-3xl font-semibold text-white">AI Workflow</h1>
+    <p class="mt-3 text-[var(--text-dim)]">
+      Every project on this site kept a running decision log and development journal while it was being built — not
+      cleaned up afterward, written as things actually happened. A few real entries, below. Nothing here is a
+      generic "I use AI" statement; it's the actual reasoning and the actual bugs.
+    </p>
+
+    <div class="mt-10 flex flex-col gap-6">
+      {entries.map((entry) => (
+        <div class="rounded-lg border-l-2 border-[var(--accent)] bg-white/5 p-5">
+          <h2 class="text-base font-semibold text-white">{entry.heading}</h2>
+          <p class="mt-2 text-sm text-[var(--text-dim)]">{entry.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-10 text-[var(--text-dim)]">
+      The pattern across all of it: I direct — scope, priorities, what's honest to claim, what's worth building at
+      all — and AI executes, fast, with me reviewing and correcting as it goes. That's the actual division of labor,
+      not a marketing line.
+    </p>
+  </section>
+</Layout>

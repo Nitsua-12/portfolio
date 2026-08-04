@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Synthwave Scene Generator — a procedurally generated retro neon sunset scene, built by Austin Wakefield."
+    >
+    <title>Synthwave Scene Generator</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="page-header">
+        <h1>Synthwave Scene Generator</h1>
+        <p>A procedural retro-neon sunset, redrawn on every seed.</p>
+      </header>
+
+      <main>
+        <canvas id="scene" role="img" aria-label="Generated synthwave sunset scene"></canvas>
+
+        <section class="controls" aria-label="Scene controls">
+          <div class="control-group" role="group" aria-label="Color palette">
+            <span class="control-label">Palette</span>
+            <div class="palette-buttons">
+              <button type="button" class="palette-btn" data-palette="miami-nights" aria-pressed="true">
+                Miami Nights
+              </button>
+              <button type="button" class="palette-btn" data-palette="dusk-ember" aria-pressed="false">
+                Dusk Ember
+              </button>
+              <button type="button" class="palette-btn" data-palette="neon-grave" aria-pressed="false">
+                Neon Grave
+              </button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="time-slider" class="control-label">Time of day</label>
+            <div class="slider-row">
+              <span aria-hidden="true">Dusk</span>
+              <input id="time-slider" type="range" min="0" max="100" value="30">
+              <span aria-hidden="true">Night</span>
+            </div>
+          </div>
+
+          <div class="control-group action-group">
+            <button type="button" id="randomize-btn">Randomize</button>
+            <button type="button" id="save-btn">Save as PNG</button>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

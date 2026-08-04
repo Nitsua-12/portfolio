@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SceneGeneratorHero from "../islands/SceneGeneratorHero";
+
+const projects = [
+  {
+    href: "/projects/synthwave-scene-generator",
+    name: "Synthwave Scene Generator",
+    summary: "A procedural canvas engine that draws this exact scene — never the same twice.",
+    tags: ["TypeScript", "Canvas 2D", "Vite"],
+  },
+  {
+    href: "/projects/shift-swap",
+    name: "Shift Swap",
+    summary: "A real shift-swap workflow for hourly teams, built from my own experience as a shift lead.",
+    tags: ["FastAPI", "SQLModel", "React"],
+  },
+];
+---
+
+<Layout
+  title="Home"
+  description="Austin Wakefield — early-career web developer directing AI tools with judgment, not just prompts."
+>
+  <section class="relative h-[70vh] min-h-[420px] w-full overflow-hidden">
+    <div class="absolute inset-0">
+      <SceneGeneratorHero client:load />
+    </div>
+    <div class="absolute inset-0 flex flex-col items-start justify-center bg-black/10 px-6">
+      <div class="mx-auto w-full max-w-5xl">
+        <h1 class="max-w-xl text-4xl font-semibold text-white drop-shadow-lg sm:text-5xl">
+          I direct the tools. The judgment is still mine.
+        </h1>
+        <p class="mt-4 max-w-lg text-lg text-white/90 drop-shadow">
+          Early-career web developer with a Python foundation, building real projects by orchestrating AI instead of
+          leaning on it — and documenting every decision along the way.
+        </p>
+        <div class="mt-6 flex gap-3">
+          <a
+            href="/projects"
+            class="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white no-underline transition-opacity hover:opacity-90"
+          >
+            See the projects
+          </a>
+          <a
+            href="/ai-workflow"
+            class="rounded-md border border-white/40 px-4 py-2 text-sm font-medium text-white no-underline transition-colors hover:border-white"
+          >
+            How I actually use AI
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <h2 class="mb-8 text-2xl font-semibold">Recent work</h2>
+    <div class="grid gap-6 sm:grid-cols-2">
+      {projects.map((project) => (
+        <a
+          href={project.href}
+          class="block rounded-lg border border-white/10 bg-white/5 p-6 no-underline transition-colors hover:border-[var(--accent-2)]/50"
+        >
+          <h3 class="text-lg font-semibold text-white">{project.name}</h3>
+          <p class="mt-2 text-sm text-[var(--text-dim)]">{project.summary}</p>
+          <div class="mt-4 flex gap-2">
+            {project.tags.map((tag) => (
+              <span class="mono rounded border border-white/10 px-2 py-0.5 text-xs text-[var(--accent-2)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
