@@ -125,3 +125,13 @@ Every non-obvious decision, in the order made. Each entry: what was decided, wha
 **Why:** Direct feedback — "get rid of the black mountain," plus "I like the motion but slow it down" for the previous round's grid-flow/particle additions. The mountain was flagged specifically as a flat, harsh black shape sitting above the cyan grid; removing it (rather than just recoloring) also deletes real code (`drawMountains`, the `sceneType` branch) instead of leaving an unused path around.
 
 **Trade-off:** Slightly less variety on "Randomize" now — every seed produces the same structural silhouette, varying only in stars, particles, and car position. Accepted since Austin explicitly chose this over a treatment-only fix.
+
+## 2026-08-05 — Site-wide visual polish: ambient glow, grain, scroll-reveal, hover glow
+
+**Decision:** Extended the synthwave identity past the hero into every page — two large slow-drifting blurred glow blobs fixed behind all content, a very subtle film-grain texture overlay, scroll-triggered fade/rise reveals on headings and cards (via one shared `IntersectionObserver` in `Layout.astro`), gradient-text page headings, and hover-glow on card-style links. A glass/blur treatment was also added to the nav bar.
+
+**Why:** Direct request — "make this site majestic... as if one can't take their eyes off." The real gap wasn't the hero (already strong); it was that every page *after* the hero was flat and generic, so the site's energy dropped off a cliff past the homepage.
+
+**Implementation note:** Caught and fixed a real CSS bug while building this — `.reveal` and `.glow-card` both set the `transition` shorthand, and when an element has both classes, the cascade doesn't merge the two property lists; whichever rule is later in the stylesheet wins outright for all sub-properties. Fixed by making `.reveal`'s transition list comprehensive enough to cover both concerns rather than assuming they'd compose. Also added a separate `.glow-frame` (static glow, no hover-lift) distinct from `.glow-card` (lift + glow) — the interactive scene-generator embed needed the former, since a hover-lift on a container people are actively clicking controls inside of would just look like a bug.
+
+**Trade-off:** More CSS surface area and one more moving part (the reveal observer) — justified because it's genuinely shared/reusable across every page, not per-page bespoke animation code.

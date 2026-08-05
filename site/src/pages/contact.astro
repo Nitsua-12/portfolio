@@ -4,12 +4,12 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Contact" description="Get in touch with Austin Wakefield.">
   <section class="prose mx-auto max-w-3xl px-6 py-16">
-    <h1 class="text-3xl font-semibold text-white">Contact</h1>
-    <p class="mt-3 text-[var(--text-dim)]">The best ways to reach me:</p>
-    <div class="mt-4 flex flex-wrap gap-3">
+    <h1 class="reveal gradient-text text-3xl font-semibold">Contact</h1>
+    <p class="reveal mt-3 text-[var(--text-dim)]" style="transition-delay: 60ms">The best ways to reach me:</p>
+    <div class="reveal mt-4 flex flex-wrap gap-3" style="transition-delay: 120ms">
       <a
         href="mailto:wakefieldaustin1206@gmail.com"
-        class="inline-block rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white no-underline"
+        class="inline-block rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white no-underline transition-all hover:opacity-90 hover:shadow-[0_0_24px_-2px_rgba(255,46,136,0.7)]"
       >
         Email me
       </a>
@@ -17,7 +17,7 @@ import Layout from "../layouts/Layout.astro";
         href="https://www.linkedin.com/in/austin-wakefield-a36522340"
         target="_blank"
         rel="noreferrer"
-        class="inline-block rounded-md border border-white/40 px-4 py-2 text-sm font-medium text-white no-underline"
+        class="inline-block rounded-md border border-white/40 px-4 py-2 text-sm font-medium text-white no-underline transition-all hover:border-[var(--accent-2)] hover:shadow-[0_0_20px_-4px_rgba(0,229,255,0.6)]"
       >
         Message me on LinkedIn
       </a>

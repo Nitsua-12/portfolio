@@ -15,9 +15,12 @@ function isActive(href: string) {
 }
 ---
 
-<header class="border-b border-white/10">
+<header
+  class="sticky top-0 z-20 border-b border-white/10 bg-[var(--bg)]/70 backdrop-blur-md"
+  style="box-shadow: 0 1px 0 0 rgba(255,46,136,0.15), 0 1px 24px -8px rgba(0,229,255,0.15);"
+>
   <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a href="/" class="font-heading text-lg font-semibold text-[var(--text)] no-underline">
+    <a href="/" class="gradient-text font-heading text-lg font-semibold no-underline">
       Austin Wakefield
     </a>
     <ul class="flex gap-1">

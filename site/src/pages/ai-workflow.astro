@@ -26,23 +26,26 @@ const entries = [
   description="How AI actually gets used in this work — real decisions and real mistakes, not a summary."
 >
   <section class="prose mx-auto max-w-3xl px-6 py-16">
-    <h1 class="text-3xl font-semibold text-white">AI Workflow</h1>
-    <p class="mt-3 text-[var(--text-dim)]">
+    <h1 class="reveal gradient-text text-3xl font-semibold">AI Workflow</h1>
+    <p class="reveal mt-3 text-[var(--text-dim)]" style="transition-delay: 80ms">
       Every project on this site kept a running decision log and development journal while it was being built — not
       cleaned up afterward, written as things actually happened. A few real entries, below. Nothing here is a
       generic "I use AI" statement; it's the actual reasoning and the actual bugs.
     </p>
 
     <div class="mt-10 flex flex-col gap-6">
-      {entries.map((entry) => (
-        <div class="rounded-lg border-l-2 border-[var(--accent)] bg-white/5 p-5">
+      {entries.map((entry, i) => (
+        <div
+          class="reveal rounded-lg border-l-2 border-[var(--accent)] bg-white/5 p-5 transition-colors hover:bg-white/[0.08]"
+          style={`transition-delay: ${160 + i * 90}ms`}
+        >
           <h2 class="text-base font-semibold text-white">{entry.heading}</h2>
           <p class="mt-2 text-sm text-[var(--text-dim)]">{entry.body}</p>
         </div>
       ))}
     </div>
 
-    <p class="mt-10 text-[var(--text-dim)]">
+    <p class="reveal mt-10 text-[var(--text-dim)]">
       The pattern across all of it: I direct — scope, priorities, what's honest to claim, what's worth building at
       all — and AI executes, fast, with me reviewing and correcting as it goes. That's the actual division of labor,
       not a marketing line.

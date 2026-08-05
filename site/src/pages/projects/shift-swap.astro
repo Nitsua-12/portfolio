@@ -20,7 +20,7 @@ const screenshots = [
     tags={["FastAPI", "SQLModel", "SQLite", "React", "TypeScript", "Tailwind", "JWT auth"]}
   />
 
-  <section class="mx-auto max-w-3xl px-6 py-10">
+  <section class="reveal mx-auto max-w-3xl px-6 py-10">
     <h2 class="text-xl font-semibold text-white">What it does</h2>
     <p class="prose mt-3 text-[var(--text-dim)]">
       Employees see their upcoming shifts and can flag one as available to swap. Other employees see open requests
@@ -30,18 +30,21 @@ const screenshots = [
     </p>
   </section>
 
-  <section class="mx-auto max-w-3xl px-6 py-10">
+  <section class="reveal mx-auto max-w-3xl px-6 py-10">
     <h2 class="text-xl font-semibold text-white">Walkthrough</h2>
     <div class="mt-6 grid gap-6 sm:grid-cols-2">
-      {screenshots.map((shot) => (
-        <div class="h-56 overflow-hidden rounded-lg border border-white/10">
-          <img src={shot.src} alt={shot.alt} class="w-full object-cover object-top" loading="lazy" />
+      {screenshots.map((shot, i) => (
+        <div
+          class="glow-card reveal h-56 overflow-hidden rounded-lg border border-white/10"
+          style={`transition-delay: ${i * 80}ms`}
+        >
+          <img src={shot.src} alt={shot.alt} class="h-full w-full object-cover object-top" loading="lazy" />
         </div>
       ))}
     </div>
   </section>
 
-  <section class="prose mx-auto max-w-3xl px-6 py-10">
+  <section class="reveal prose mx-auto max-w-3xl px-6 py-10">
     <h2 class="text-xl font-semibold text-white">Technical approach</h2>
     <ul class="mt-4 flex flex-col gap-3 text-[var(--text-dim)]">
       <li>

@@ -14,18 +14,18 @@ import InteractiveSceneGenerator from "../../islands/InteractiveSceneGenerator";
     tags={["TypeScript", "Canvas 2D API", "Vite", "No framework"]}
   />
 
-  <section class="mx-auto max-w-3xl px-6 py-10">
+  <section class="reveal mx-auto max-w-3xl px-6 py-10">
     <h2 class="text-xl font-semibold text-white">Try it</h2>
     <p class="prose mt-2 text-[var(--text-dim)]">
       This is the actual project, running live — not a screenshot. Pick a palette, drag the slider from dusk to
       night, and hit Randomize for a new layout.
     </p>
-    <div class="mt-6">
+    <div class="glow-frame mt-6 rounded-lg border border-white/10 p-1">
       <InteractiveSceneGenerator client:visible />
     </div>
   </section>
 
-  <section class="prose mx-auto max-w-3xl px-6 py-10">
+  <section class="reveal prose mx-auto max-w-3xl px-6 py-10">
     <h2 class="text-xl font-semibold text-white">Technical approach</h2>
     <ul class="mt-4 flex flex-col gap-3 text-[var(--text-dim)]">
       <li>

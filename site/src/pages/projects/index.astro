@@ -21,17 +21,18 @@ const projects = [
 
 <Layout title="Projects" description="Two real projects, built and documented from scratch.">
   <section class="mx-auto max-w-5xl px-6 py-16">
-    <h1 class="text-3xl font-semibold">Projects</h1>
-    <p class="prose mt-3 text-[var(--text-dim)]">
+    <h1 class="reveal gradient-text text-3xl font-semibold">Projects</h1>
+    <p class="reveal prose mt-3 text-[var(--text-dim)]" style="transition-delay: 80ms">
       Both of these were built during this portfolio project itself — not pulled from old coursework. Each one has a
       full case study covering the technical approach and the decisions behind it.
     </p>
 
     <div class="mt-10 flex flex-col gap-6">
-      {projects.map((project) => (
+      {projects.map((project, i) => (
         <a
           href={project.href}
-          class="block rounded-lg border border-white/10 bg-white/5 p-6 no-underline transition-colors hover:border-[var(--accent-2)]/50"
+          class="glow-card reveal block rounded-lg border border-white/10 bg-white/5 p-6 no-underline"
+          style={`transition-delay: ${160 + i * 100}ms`}
         >
           <h2 class="text-xl font-semibold text-white">{project.name}</h2>
           <p class="prose mt-2 text-sm text-[var(--text-dim)]">{project.summary}</p>

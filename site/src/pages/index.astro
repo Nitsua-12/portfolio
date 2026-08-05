@@ -40,13 +40,13 @@ const projects = [
         <div class="mt-6 flex gap-3">
           <a
             href="/projects"
-            class="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white no-underline transition-opacity hover:opacity-90"
+            class="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white no-underline transition-all hover:opacity-90 hover:shadow-[0_0_24px_-2px_rgba(255,46,136,0.7)]"
           >
             See the projects
           </a>
           <a
             href="/ai-workflow"
-            class="rounded-md border border-white/40 px-4 py-2 text-sm font-medium text-white no-underline transition-colors hover:border-white"
+            class="rounded-md border border-white/40 px-4 py-2 text-sm font-medium text-white no-underline transition-all hover:border-[var(--accent-2)] hover:shadow-[0_0_20px_-4px_rgba(0,229,255,0.6)]"
           >
             How I actually use AI
           </a>
@@ -55,13 +55,14 @@ const projects = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-6 py-16">
-    <h2 class="mb-8 text-2xl font-semibold">Recent work</h2>
+  <section class="relative mx-auto max-w-5xl px-6 py-16">
+    <h2 class="reveal gradient-text mb-8 text-2xl font-semibold">Recent work</h2>
     <div class="grid gap-6 sm:grid-cols-2">
-      {projects.map((project) => (
+      {projects.map((project, i) => (
         <a
           href={project.href}
-          class="block rounded-lg border border-white/10 bg-white/5 p-6 no-underline transition-colors hover:border-[var(--accent-2)]/50"
+          class="glow-card reveal block rounded-lg border border-white/10 bg-white/5 p-6 no-underline"
+          style={`transition-delay: ${i * 100}ms`}
         >
           <h3 class="text-lg font-semibold text-white">{project.name}</h3>
           <p class="mt-2 text-sm text-[var(--text-dim)]">{project.summary}</p>
