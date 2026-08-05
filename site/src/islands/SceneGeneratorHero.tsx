@@ -41,12 +41,16 @@ export default function SceneGeneratorHero() {
       const timeOfDay = 0.25 + 0.2 * (0.5 + 0.5 * Math.sin(timeMs / 20000));
       drawScene(ctx!, canvas!.width, canvas!.height, layoutRef.current, PALETTE, timeOfDay, timeMs, {
         showCar: false,
+        showStructure: false,
       });
       frame = requestAnimationFrame(render);
     }
 
     if (prefersReducedMotion) {
-      drawScene(ctx, canvas.width, canvas.height, layoutRef.current!, PALETTE, 0.35, 0, { showCar: false });
+      drawScene(ctx, canvas.width, canvas.height, layoutRef.current!, PALETTE, 0.35, 0, {
+        showCar: false,
+        showStructure: false,
+      });
     } else {
       frame = requestAnimationFrame(render);
     }

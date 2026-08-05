@@ -29,6 +29,9 @@ export interface SceneLayout {
 export interface DrawOptions {
   /** Off on the homepage hero (too busy alongside the flowing grid/particles); on everywhere else. */
   showCar?: boolean;
+  /** Off on the homepage hero — the gas-station canopy/sign silhouette reads as stray black
+   * rectangles once hero text overlaps it. On everywhere else, since it's the generator's actual feature. */
+  showStructure?: boolean;
 }
 
 export function generateLayout(seed: number, w: number, h: number): SceneLayout {
@@ -322,14 +325,14 @@ export function drawScene(
   timeMs: number,
   options: DrawOptions = {},
 ): void {
-  const { showCar = true } = options;
+  const { showCar = true, showStructure = true } = options;
   const sky = lerpSky(palette, timeOfDay);
 
   drawSky(ctx, w, h, sky);
   drawGround(ctx, w, h, palette);
   drawStars(ctx, layout.stars, palette.star, timeOfDay, timeMs);
   drawSun(ctx, w, h, palette, sky);
-  drawGasStation(ctx, w, h, palette);
+  if (showStructure) drawGasStation(ctx, w, h, palette);
   drawGrid(ctx, w, h, palette, timeMs);
   if (showCar) drawCar(ctx, w, h, layout.carOffsetX, palette);
   drawParticles(ctx, w, h, layout.particles, palette, timeMs);

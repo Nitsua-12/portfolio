@@ -135,3 +135,11 @@ Every non-obvious decision, in the order made. Each entry: what was decided, wha
 **Implementation note:** Caught and fixed a real CSS bug while building this — `.reveal` and `.glow-card` both set the `transition` shorthand, and when an element has both classes, the cascade doesn't merge the two property lists; whichever rule is later in the stylesheet wins outright for all sub-properties. Fixed by making `.reveal`'s transition list comprehensive enough to cover both concerns rather than assuming they'd compose. Also added a separate `.glow-frame` (static glow, no hover-lift) distinct from `.glow-card` (lift + glow) — the interactive scene-generator embed needed the former, since a hover-lift on a container people are actively clicking controls inside of would just look like a bug.
 
 **Trade-off:** More CSS surface area and one more moving part (the reveal observer) — justified because it's genuinely shared/reusable across every page, not per-page bespoke animation code.
+
+## 2026-08-05 — Drop the gas-station structure from the homepage hero too
+
+**Decision:** Added a second `DrawOptions` flag, `showStructure`, alongside `showCar`. The homepage hero now renders neither the car nor the gas-station canopy/sign/kiosk — just sky, sun, grid, stars, particles. The project page's interactive generator still shows the full structure.
+
+**Why:** Same root cause as the mountain removal, one round later — Austin flagged the gas-station canopy/sign as "weird black boxes" via another annotated screenshot. Once hero text overlaps those flat rectangular silhouettes, they don't read as a gas station at all, just stray black bars. The structure is the generator's actual point on its own project page (full context, no overlapping text, described explicitly in the case-study copy), so it stays there — this is scoped to the hero specifically, following the same reasoning as the car.
+
+**Trade-off:** None — this was purely additive (one more boolean flag on an option object that already existed for exactly this purpose).
