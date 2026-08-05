@@ -24,37 +24,44 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-}
+/* Cascade layers matter here: Tailwind wraps its utilities in `@layer utilities`, and
+   per spec, ANY unlayered rule beats ANY layered rule regardless of specificity. These
+   base resets have to live in `@layer base` (same layer Tailwind uses, ordered before
+   utilities) or a plain `a { color: inherit }` would silently defeat every
+   `text-[var(--accent-2)]` utility applied to a link, no matter how specific. */
+@layer base {
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-heading);
-  letter-spacing: -0.01em;
-}
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
 
-code,
-.mono {
-  font-family: var(--font-mono);
-}
+  code,
+  .mono {
+    font-family: var(--font-mono);
+  }
 
-a {
-  color: inherit;
-}
+  a {
+    color: inherit;
+  }
 
-.prose {
-  max-width: 42rem;
-}
+  .prose {
+    max-width: 42rem;
+  }
 
-.prose p {
-  line-height: 1.7;
-  color: var(--text-dim);
+  .prose p {
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
 }
 
 /* Ambient background — two large, slow-drifting blurred glows behind every page,
