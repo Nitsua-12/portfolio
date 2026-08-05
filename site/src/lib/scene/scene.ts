@@ -10,12 +10,27 @@ export interface Star {
   phase: number;
 }
 
+export interface Particle {
+  x: number;
+  y: number;
+  size: number;
+  riseSpeed: number;
+  drift: number;
+  phase: number;
+}
+
 export interface SceneLayout {
   seed: number;
   sceneType: "mountains" | "gasStation";
   mountainPoints: { x: number; y: number }[];
   stars: Star[];
+  particles: Particle[];
   carOffsetX: number;
+}
+
+export interface DrawOptions {
+  /** Off on the homepage hero (too busy alongside the flowing grid/particles); on everywhere else. */
+  showCar?: boolean;
 }
 
 export function generateLayout(seed: number, w: number, h: number): SceneLayout {
@@ -44,9 +59,22 @@ export function generateLayout(seed: number, w: number, h: number): SceneLayout 
     });
   }
 
+  const particles: Particle[] = [];
+  const particleCount = 40;
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: rng() * w,
+      y: rng() * h,
+      size: 0.8 + rng() * 1.8,
+      riseSpeed: 0.012 + rng() * 0.02,
+      drift: (rng() - 0.5) * 0.006,
+      phase: rng() * Math.PI * 2,
+    });
+  }
+
   const carOffsetX = (rng() - 0.5) * 0.3;
 
-  return { seed, sceneType, mountainPoints, stars, carOffsetX };
+  return { seed, sceneType, mountainPoints, stars, particles, carOffsetX };
 }
 
 function drawSky(ctx: CanvasRenderingContext2D, w: number, h: number, sky: SkyStops): void {
@@ -201,6 +229,7 @@ function drawGasStation(
   ctx.restore();
 }
 
+/** Horizontal lines continuously march from the horizon toward the viewer and loop — the "driving forward" illusion. */
 function drawGrid(
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -219,9 +248,11 @@ function drawGrid(
   ctx.globalAlpha = pulse;
   ctx.lineWidth = 1.5;
 
-  const hLines = 10;
-  for (let i = 1; i <= hLines; i++) {
-    const t = i / hLines;
+  const hLines = 14;
+  const flowCycleMs = 4200;
+  const flowOffset = (timeMs % flowCycleMs) / flowCycleMs;
+  for (let i = 0; i < hLines; i++) {
+    const t = (i / hLines + flowOffset) % 1;
     const y = horizonY + (h - horizonY) * t * t;
     ctx.beginPath();
     ctx.moveTo(0, y);
@@ -285,6 +316,34 @@ function drawCar(
   ctx.restore();
 }
 
+/** Soft glowing motes drifting upward through the whole scene — drawn last, on top of everything. */
+function drawParticles(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  particles: Particle[],
+  palette: Palette,
+  timeMs: number,
+): void {
+  ctx.save();
+  ctx.fillStyle = palette.glow;
+  ctx.shadowColor = palette.glow;
+  ctx.shadowBlur = 4;
+  for (const p of particles) {
+    let y = (p.y - timeMs * p.riseSpeed) % h;
+    if (y < 0) y += h;
+    let x = (p.x + timeMs * p.drift) % w;
+    if (x < 0) x += w;
+
+    const twinkle = 0.5 + 0.5 * Math.sin(timeMs / 500 + p.phase);
+    ctx.globalAlpha = 0.25 + 0.35 * twinkle;
+    ctx.beginPath();
+    ctx.arc(x, y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
 export function drawScene(
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -293,7 +352,9 @@ export function drawScene(
   palette: Palette,
   timeOfDay: number,
   timeMs: number,
+  options: DrawOptions = {},
 ): void {
+  const { showCar = true } = options;
   const sky = lerpSky(palette, timeOfDay);
 
   drawSky(ctx, w, h, sky);
@@ -308,5 +369,6 @@ export function drawScene(
   }
 
   drawGrid(ctx, w, h, palette, timeMs);
-  drawCar(ctx, w, h, layout.carOffsetX, palette);
+  if (showCar) drawCar(ctx, w, h, layout.carOffsetX, palette);
+  drawParticles(ctx, w, h, layout.particles, palette, timeMs);
 }

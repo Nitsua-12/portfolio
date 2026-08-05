@@ -39,12 +39,14 @@ export default function SceneGeneratorHero() {
       // Slow dusk-to-night drift instead of a static frame — the hero's one
       // piece of ambient motion, distinct from the fully interactive project page.
       const timeOfDay = 0.25 + 0.2 * (0.5 + 0.5 * Math.sin(timeMs / 20000));
-      drawScene(ctx!, canvas!.width, canvas!.height, layoutRef.current, PALETTE, timeOfDay, timeMs);
+      drawScene(ctx!, canvas!.width, canvas!.height, layoutRef.current, PALETTE, timeOfDay, timeMs, {
+        showCar: false,
+      });
       frame = requestAnimationFrame(render);
     }
 
     if (prefersReducedMotion) {
-      drawScene(ctx, canvas.width, canvas.height, layoutRef.current!, PALETTE, 0.35, 0);
+      drawScene(ctx, canvas.width, canvas.height, layoutRef.current!, PALETTE, 0.35, 0, { showCar: false });
     } else {
       frame = requestAnimationFrame(render);
     }
