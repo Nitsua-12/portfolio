@@ -26,8 +26,8 @@ Try it: `npm run dev` in the project folder, or see the screenshots in `showcase
 ## Technical approach
 
 - **Vite + TypeScript, no framework.** This is one interactive canvas with no routing or shared app state — a UI framework would have been pure overhead. TypeScript because typed code catches real mistakes early, which matters more, not less, early in a developer's career.
-- **Seeded procedural generation.** A `mulberry32` PRNG means every scene is reproducible from its seed — the same seed always draws the same mountains, star positions, and silhouette choice.
-- **Layout and rendering are deliberately separate.** The composition (mountain shape, star positions, which silhouette) is generated once per seed. Palette and time-of-day changes re-render every frame without touching that layout. That's what makes the slider feel instant instead of janky, and it's what makes "Randomize" a meaningfully different action from "change the color."
+- **Seeded procedural generation.** A `mulberry32` PRNG means every scene is reproducible from its seed — the same seed always draws the same star positions, particle paths, and car placement.
+- **Layout and rendering are deliberately separate.** The composition (star positions, particle paths) is generated once per seed. Palette, time-of-day, and the grid's continuous forward flow all re-render every frame without touching that layout. That's what makes the slider feel instant instead of janky, and it's what makes "Randomize" a meaningfully different action from "change the color."
 - **Curated, not infinite, color choice.** Three hand-picked palettes instead of a full color wheel — a deliberate constraint, because infinite choice is worse design than a few good choices.
 
 Full reasoning and the alternatives considered for each of these are in the [[../../AI-Workflow/Decision-Log|Decision Log]].

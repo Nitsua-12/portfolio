@@ -30,13 +30,13 @@ import InteractiveSceneGenerator from "../../islands/InteractiveSceneGenerator";
     <ul class="mt-4 flex flex-col gap-3 text-[var(--text-dim)]">
       <li>
         <strong class="text-white">Seeded procedural generation.</strong> A <code class="mono">mulberry32</code> pseudo-random
-        generator means every scene is fully reproducible from its seed — the mountains, star field, and whether it
-        draws mountains or a small gas-station structure are all deterministic given that seed.
+        generator means every scene is fully reproducible from its seed — the star field, the drifting light
+        particles, and the car's position are all deterministic given that seed.
       </li>
       <li>
-        <strong class="text-white">Layout and rendering are deliberately separate.</strong> The composition (mountain
-        shape, star positions, silhouette choice) generates once per seed. Palette and time-of-day changes re-render
-        every frame without touching that layout — that's what makes the slider feel instant instead of janky.
+        <strong class="text-white">Layout and rendering are deliberately separate.</strong> The composition (star
+        positions, particle paths) generates once per seed. Palette, time-of-day, and the grid's continuous flow
+        re-render every frame without touching that layout — that's what makes the slider feel instant instead of janky.
       </li>
       <li>
         <strong class="text-white">Curated, not infinite, color choice.</strong> Three hand-picked palettes instead of

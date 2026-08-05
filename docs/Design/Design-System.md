@@ -54,4 +54,4 @@ Austin's own bar, from Discovery: too much animation is "when everything on the 
 
 ## Mood reference
 
-Rather than an invented mood board, the actual proof-of-concept already exists: `projects/synthwave-scene-generator/showcase/*.png`. Those four screenshots — the pink/cyan Miami Nights palette across mountains and gas-station variants, dusk through night — are the literal visual target for the site's brand identity, not a stylized approximation of it.
+Rather than an invented mood board, the actual proof-of-concept already exists: `projects/synthwave-scene-generator/showcase/*.png`. Those screenshots — the pink/cyan Miami Nights palette against the gas-station structure, dusk through night — are the literal visual target for the site's brand identity, not a stylized approximation of it.

@@ -21,8 +21,6 @@ export interface Particle {
 
 export interface SceneLayout {
   seed: number;
-  sceneType: "mountains" | "gasStation";
-  mountainPoints: { x: number; y: number }[];
   stars: Star[];
   particles: Particle[];
   carOffsetX: number;
@@ -35,18 +33,7 @@ export interface DrawOptions {
 
 export function generateLayout(seed: number, w: number, h: number): SceneLayout {
   const rng = mulberry32(seed);
-  const sceneType: SceneLayout["sceneType"] = rng() < 0.5 ? "mountains" : "gasStation";
   const horizonY = h * HORIZON_FRACTION;
-
-  const mountainPoints: { x: number; y: number }[] = [];
-  if (sceneType === "mountains") {
-    const segments = 10;
-    for (let i = 0; i <= segments; i++) {
-      const x = (w / segments) * i;
-      const peak = rng() * h * 0.12;
-      mountainPoints.push({ x, y: horizonY - peak });
-    }
-  }
 
   const stars: Star[] = [];
   const starCount = 90;
@@ -66,15 +53,15 @@ export function generateLayout(seed: number, w: number, h: number): SceneLayout 
       x: rng() * w,
       y: rng() * h,
       size: 0.8 + rng() * 1.8,
-      riseSpeed: 0.012 + rng() * 0.02,
-      drift: (rng() - 0.5) * 0.006,
+      riseSpeed: 0.006 + rng() * 0.01,
+      drift: (rng() - 0.5) * 0.003,
       phase: rng() * Math.PI * 2,
     });
   }
 
   const carOffsetX = (rng() - 0.5) * 0.3;
 
-  return { seed, sceneType, mountainPoints, stars, particles, carOffsetX };
+  return { seed, stars, particles, carOffsetX };
 }
 
 function drawSky(ctx: CanvasRenderingContext2D, w: number, h: number, sky: SkyStops): void {
@@ -156,25 +143,6 @@ function drawSun(
   ctx.restore();
 }
 
-function drawMountains(
-  ctx: CanvasRenderingContext2D,
-  w: number,
-  h: number,
-  points: { x: number; y: number }[],
-  palette: Palette,
-): void {
-  const horizonY = h * HORIZON_FRACTION;
-  ctx.save();
-  ctx.fillStyle = palette.silhouette;
-  ctx.beginPath();
-  ctx.moveTo(0, horizonY);
-  for (const p of points) ctx.lineTo(p.x, p.y);
-  ctx.lineTo(w, horizonY);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
-
 function drawGasStation(
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -249,7 +217,7 @@ function drawGrid(
   ctx.lineWidth = 1.5;
 
   const hLines = 14;
-  const flowCycleMs = 4200;
+  const flowCycleMs = 9000;
   const flowOffset = (timeMs % flowCycleMs) / flowCycleMs;
   for (let i = 0; i < hLines; i++) {
     const t = (i / hLines + flowOffset) % 1;
@@ -361,13 +329,7 @@ export function drawScene(
   drawGround(ctx, w, h, palette);
   drawStars(ctx, layout.stars, palette.star, timeOfDay, timeMs);
   drawSun(ctx, w, h, palette, sky);
-
-  if (layout.sceneType === "mountains") {
-    drawMountains(ctx, w, h, layout.mountainPoints, palette);
-  } else {
-    drawGasStation(ctx, w, h, palette);
-  }
-
+  drawGasStation(ctx, w, h, palette);
   drawGrid(ctx, w, h, palette, timeMs);
   if (showCar) drawCar(ctx, w, h, layout.carOffsetX, palette);
   drawParticles(ctx, w, h, layout.particles, palette, timeMs);

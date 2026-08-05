@@ -105,3 +105,23 @@ Every non-obvious decision, in the order made. Each entry: what was decided, wha
 **Why:** Full reasoning in [[../Architecture/Technical-Architecture|Technical Architecture]]. Short version: Astro's zero-JS-by-default model matches the actual shape of this problem (mostly static content, one genuinely interactive hero) better than a general-purpose app framework would.
 
 **Trade-off:** Less familiar than React/Next given Austin's coursework and typical entry-level job listings skew React — flagged directly so he can speak to the "why" if asked about it, rather than it reading as an unexplained or default choice.
+
+## 2026-08-05 — Hero polish: drop the car, animate the grid, add particles
+
+**Decision:** The homepage hero no longer draws the car silhouette (the interactive generator on its own project page still does); the ground grid now continuously animates toward the viewer instead of sitting static; drifting glow particles were added across the whole scene.
+
+**Why:** Direct feedback from Austin, delivered as annotated screenshots in his Obsidian vault rather than a text description — he circled the car and said "remove this," and separately said the site "just seems bland" and wanted the animation to "have particles and seem like its flowing." Annotated screenshots turned out to be a very precise way to give this kind of feedback — no ambiguity about which car, which frame, or what "bland" meant once the second screenshot showed exactly where.
+
+**Implementation note:** `drawScene` gained an optional `showCar` flag (default `true`) rather than duplicating the whole draw function — the homepage hero and the interactive generator page share the same engine and should only differ in this one deliberate way. The grid "flow" is done by animating the fractional position fed into the existing perspective-easing math (`t = (i/hLines + flowOffset) % 1`) rather than adding a second animation system.
+
+**Trade-off:** None really — this was a case where "spice it up" and the existing animation-restraint principle (see [[../Design/Design-System|Design System]]) weren't in tension, since it's all still confined to the one hero animation, just a richer version of it.
+
+## 2026-08-05 — Drop the mountain silhouette entirely; slow the grid flow and particles
+
+**Decision:** Removed the "mountains" scene variant completely (type, generation, and draw function) — every scene now always renders the gas-station structure. Also slowed the grid's flow cycle (4.2s → 9s per loop) and the particles' rise/drift speed (roughly halved).
+
+**Alternatives considered:** Keep the mountain shape but give it a gradient/glow treatment instead of flat silhouette color, so it blends with the grid rather than reading as a harsh black cutout. Austin chose outright removal instead when given the choice — simpler, and the gas-station structure (his own original inspiration image) is the stronger visual anyway.
+
+**Why:** Direct feedback — "get rid of the black mountain," plus "I like the motion but slow it down" for the previous round's grid-flow/particle additions. The mountain was flagged specifically as a flat, harsh black shape sitting above the cyan grid; removing it (rather than just recoloring) also deletes real code (`drawMountains`, the `sceneType` branch) instead of leaving an unused path around.
+
+**Trade-off:** Slightly less variety on "Randomize" now — every seed produces the same structural silhouette, varying only in stars, particles, and car position. Accepted since Austin explicitly chose this over a treatment-only fix.
